@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>spec runner</title>
+		<link rel="stylesheet" href="lib/jasmine/jasmine.css" />
+		<script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
+		<script type="text/javascript" src="lib/jasmine/jasmine-html.js"></script>
+		
+		<!-- Classes -->
+		<script type="text/javascript" src="../js/app/Rectangle.js"></script>
+		<script type="text/javascript" src="../js/app/Circle.js"></script>
+		
+		<!-- Specs -->
+		<script type="text/javascript" src="specs/Rectangle.specs.js"></script>
+		<script type="text/javascript" src="specs/Circle.specs.js"></script>
+		
+		<!-- Init -->
+		<script type="text/javascript">
+			(function() {
+  				var jasmineEnv = jasmine.getEnv();
+  				jasmineEnv.updateInterval = 1000;
+
+  				var reporter = new jasmine.TrivialReporter();
+
+  				jasmineEnv.addReporter(reporter);
+
+  				jasmineEnv.specFilter = function(spec) {
+    				return reporter.specFilter(spec);
+  				};
+
+  				var currentWindowOnload = window.onload;
+
+  				window.onload = function() {
+    				if (currentWindowOnload) {
+      					currentWindowOnload();
+    				}
+    				execJasmine();
+  				};
+
+  				function execJasmine() {
+    				jasmineEnv.execute();
+  				}
+
+			})();
+		</script>
+	</head>
+</html>
