@@ -3,16 +3,19 @@
 <!-- NAnt build script -->
 <project name="PhantomJsJasmineRunner" default="dummy" basedir="." xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd">
 
-	<property name="current.dir" value="${directory::get-current-directory()}" />
-	<property name="workspace.dir" value="${environment::get-variable('WORKSPACE')}"/>
+	<property name="dir.workspace" value="${environment::get-variable('WORKSPACE')}"/>
+	<property name="dir.current" value="${dir.workspace}\src" />
+	<property name="url.jenkins" value="${environment::get-variable('JENKINS_URL')}" />
+	<property name="jenkins.jobname" value="${environment::get-variable('JOB_NAME')}" />
+	
 
 	<!--- empty default target to stop accidental runs -->
 	<target name="dummy"></target>
 	
 	<target name="initjasminetest">
-		<property name="workspace.dir.jasminetest" value="${workspace.dir}\tests\jasmine" />
-		<echo message="${workspace.dir.jasminetest} ${not directory::exists('${workspace.dir.jasminetest}')} Make Test Target directory" />
-		<mkdir dir="${workspace.dir.jasminetest}" if="${not directory::exists('${workspace.dir.jasminetest}')}" />
+		<property name="dir.workspace.jasminetest" value="${dir.workspace}\tests\jasmine" />
+		<echo message="${dir.workspace.jasminetest} ${not directory::exists('${dir.workspace.jasminetest}')} Make Test Target directory" />
+		<mkdir dir="${dir.workspace.jasminetest}" if="${not directory::exists('${dir.workspace.jasminetest}')}" />
 	</target>
 	
 	<!--
@@ -22,24 +25,22 @@
 	-->
 	<target name="jasmineunittest" depends="initjasminetest">
 		<echo message="------------------------------- JASMINE TESTS -------------------------------------" />
-		<echo message="Current Dir: ${current.dir}" />
-		<echo message="Workspace Dir: ${workspace.dir}" />
 		
 		<foreach item="File"  property="filename" >
 			<in>
-				<items basedir="${current.dir}\tests">
+				<items basedir="${dir.current}\tests">
 					<include name="*.html" />
 				</items>
 			</in>
 			<do>
 				<property name="testfile" value="${path::get-file-name(filename)}" />
 				<property name="testfilexml" value="${string::replace(testfile, '.html', '.results.xml')}" />
-				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${workspace.dir.jasminetest}\${testfilexml}"  />
+				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${dir.workspace.jasminetest}\${testfilexml}"  />
 				<exec program="phantomjs" failonerror="false">
-					<arg value="${current.dir}/phantom/JasmineRunner.js" />
+					<arg value="${dir.current}/phantom/JasmineRunner.js" />
 					<arg value="--tests=${testfile}" />
-					<arg value="--baseurl=${JENKINS_URL}/job/${JOB_NAME}/ws/src/tests/" />
-					<arg value="--outputfilename=${workspace.dir.jasminetest}\${testfilexml}" />
+					<arg value="--baseurl=${url.jenkins}/job/${jenkins.jobname}/ws/src/tests/" />
+					<arg value="--outputfilename=${dir.workspace.jasminetest}\${testfilexml}" />
 					<arg value="--timeout=150000" />
 				</exec>
 			</do>
