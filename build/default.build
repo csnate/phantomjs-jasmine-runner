@@ -35,7 +35,7 @@
 				<exec program="phantomjs" failonerror="false">
 					<arg value="${current.dir}/phantom/JasmineRunner.js" />
 					<arg value="--tests=${testfile}" />
-					<arg value="--baseurl=http://localhost:8080/job/PhantomJsJasmineRunner/ws/src/tests/" />
+					<arg value="--baseurl=${JENKINS_URL}/job/${JOB_NAME}/ws/src/tests/" />
 					<arg value="--outputfilename=${workspace.dir.jasminetest}\${testfilexml}" />
 					<arg value="--timeout=150000" />
 				</exec>
