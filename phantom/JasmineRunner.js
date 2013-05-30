@@ -46,9 +46,9 @@
         var testName = 'Timeout',
 			moduleName = 'Jasmine',
 			timestamp = isoDateString(new Date()),
-			resultStr = '<testsuite name="' + escape(tests) + '" timestamp="' + timestamp + '" tests="1" failures="1">' +
-                        '<testcase name="' + escape(testName) + '" classname="' + escape(moduleName) + '">' +
-                        '<failure message="' + escape(moduleName) + '" type="' + escape(moduleName) + '">' +
+			resultStr = '<testsuite name="' + tests + '" timestamp="' + timestamp + '" tests="1" failures="1">' +
+                        '<testcase name="' + testName + '" classname="' + escape(moduleName) + '">' +
+                        '<failure message="' + moduleName + '" type="' + moduleName + '">' +
 						err +
                         '</failure>' +
                         '</testcase>' +
@@ -60,7 +60,7 @@
         var timestamp = isoDateString(new Date());
         var results = finalResult.results;
    
-        var resultStr = '<testsuite name="' + escape(tests) + '" timestamp="' + timestamp + '" tests="' + finalResult.suitsTotal + '" failures="'
+        var resultStr = '<testsuite name="' + tests + '" timestamp="' + timestamp + '" tests="' + finalResult.suitsTotal + '" failures="'
                     + finalResult.totalFailed + '">';
 
         for (var i = 0, len = results.length; i < len; i++) {
@@ -68,10 +68,10 @@
             var specs = result.specs;
             for (var j = 0, l = specs.length; j < l; j++) {
                 var sp = specs[j];
-                resultStr += '<testcase name="' + escape(sp.specName) + '" classname="' + escape(result.suiteName) + '">';
+                resultStr += '<testcase name="' + sp.specName + '" classname="' + result.suiteName + '">';
 
                 if (sp.failedMsg) {
-                    resultStr += '<failure message="' + escape(sp.failedMsg) + '" type="' + escape(result.suiteName) + '">';
+                    resultStr += '<failure message="' + escape(sp.failedMsg) + '" type="' + result.suiteName + '">';
                     resultStr += '<failedTrace>' + sp.failedTrace + '</failedTrace>';
                     resultStr += '</failure>';
                 }
