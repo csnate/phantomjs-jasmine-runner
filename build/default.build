@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- NAnt build script -->
+<project name="PhantomJsJasmineRunner" default="dummy" basedir="." xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd">
+
+	<property name="current.dir" value="${directory::get-current-directory()}" />
+	<property name="workspace.dir" value="${environment::get-variable('WORKSPACE')}"/>
+
+	<!--- empty default target to stop accidental runs -->
+	<target name="dummy"></target>
+	
+	<target name="initjasminetest">
+		<property name="workspace.dir.jasminetest" value="${workspace.dir}\tests\jasmine" />
+		<echo message="${workspace.dir.jasminetest} ${not directory::exists('${workspace.dir.jasminetest}')} Make Test Target directory" />
+		<mkdir dir="${workspace.dir.jasminetest}" if="${not directory::exists('${workspace.dir.jasminetest}')}" />
+	</target>
+	
+	<target name="jasmineunittest" depends="initjasminetest">
+		<echo message="------------------------------- JASMINE TESTS -------------------------------------" />
+		<foreach item="File"  property="filename" >
+			<in>
+				<items basedir="${current.dir}\tests">
+					<include name="*.html" />
+				</items>
+			</in>
+			<do>
+				<property name="testfile" value="${path::get-file-name(filename)}" />
+				<property name="testfilexml" value="${string::replace(testfile, '.htm', '.results.xml')}" />
+				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${current.dir.jasminetest}\${testfilexml}"  />
+				<exec program="phantomjs" failonerror="false">
+					<arg value="${current.dir}/phantom/JasmineRunner.js" />
+					<arg value="--tests=${testfile}" />
+					<arg value="--baseurl=http://localhost:8080/job/PhantomJsJasmineRunner/ws/src/tests/" />
+					<arg value="--outputfilename=${workspace.dir.jasminetest}\${testfilexml}" />
+					<arg value="--timeout=150000" />
+				</exec>
+			</do>
+		</foreach>
+	</target>
+
+</project>
