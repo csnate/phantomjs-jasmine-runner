@@ -22,6 +22,9 @@
 	-->
 	<target name="jasmineunittest" depends="initjasminetest">
 		<echo message="------------------------------- JASMINE TESTS -------------------------------------" />
+		<echo message="Current Dir: ${current.dir}" />
+		<echo message="Workspace Dir: ${workspace.dir}" />
+		
 		<foreach item="File"  property="filename" >
 			<in>
 				<items basedir="${current.dir}\tests">
@@ -30,7 +33,7 @@
 			</in>
 			<do>
 				<property name="testfile" value="${path::get-file-name(filename)}" />
-				<property name="testfilexml" value="${string::replace(testfile, '.htm', '.results.xml')}" />
+				<property name="testfilexml" value="${string::replace(testfile, '.html', '.results.xml')}" />
 				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${workspace.dir.jasminetest}\${testfilexml}"  />
 				<exec program="phantomjs" failonerror="false">
 					<arg value="${current.dir}/phantom/JasmineRunner.js" />
