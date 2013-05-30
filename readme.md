@@ -10,12 +10,17 @@ Prerequisites
 
 Jenkins Configuration
 ---------------------
-* Source Code Management -> Git -> Advanced 
-** Local subdirectory for repo (optional) = src.
-*** This is done to keep your source code and test results completely separate.  The test results will be saved to a "tests\jasmine" directory in your workspace root
-*** If you change this to a different value, you'll need to update the default.build file as well.  Unfortunately, this value isn't passed to the build script as an environment variable
-* Add a build step -> Execute NAnt build
-** NAnt Build File = src/build/default.build
-** Targets = jasmineunittest
-* Add a Post-build Action -> Publish JUnit test result report
-** Test report XMLs = tests/jasmine/*.xml
+**Source Code Management -> Git -> Advanced**
+
+* Local subdirectory for repo (optional) = src.
+
+*This is done to keep your source code and test results completely separate.  The test results will be saved to a "tests\jasmine" directory in your workspace root. If you change this to a different value, you'll need to update the default.build file as well.  Unfortunately, this value isn't passed to the build script as an environment variable.*
+
+**Add a build step -> Execute NAnt build**
+
+* NAnt Build File = src/build/default.build
+* Targets = jasmineunittest
+
+**Add a Post-build Action -> Publish JUnit test result report**
+
+* Test report XMLs = tests/jasmine/*.xml
