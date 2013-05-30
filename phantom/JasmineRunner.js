@@ -177,9 +177,10 @@
 				console.log("OutputFilename: " + outputfilename);
 				var finalResult = page.evaluate(function () {
 					var suites = document.body.querySelectorAll('.suite');
-					console.log("# of suites: " + suites);
+					console.log("# of suites: " + suites.length);
 					var results = [];
 					var failed = 0;
+					var total = 0;
 					for(var i = 0; i < suites.length; i++) {
 						var result = { };
 						var suite = suites[i];
@@ -212,7 +213,8 @@
 						result.specs = resultSpecs;
 
 						results.push(result);
-
+						total += resultSpecs.length;
+						
 					}
 
 					var runner1 = document.body.querySelector('.runner');
@@ -224,7 +226,7 @@
 						results: results,
 						summary: summary,
 						totalFailed: failed,
-						suitsTotal: results.length
+						suitsTotal: total
 					};
 				});
 
