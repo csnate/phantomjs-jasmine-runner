@@ -15,6 +15,11 @@
 		<mkdir dir="${workspace.dir.jasminetest}" if="${not directory::exists('${workspace.dir.jasminetest}')}" />
 	</target>
 	
+	<!--
+		IMPORTANT!
+		This configuration assumes the following:
+		- You are checking out your repository into a sub directory of your workspace named "src"
+	-->
 	<target name="jasmineunittest" depends="initjasminetest">
 		<echo message="------------------------------- JASMINE TESTS -------------------------------------" />
 		<foreach item="File"  property="filename" >
@@ -26,7 +31,7 @@
 			<do>
 				<property name="testfile" value="${path::get-file-name(filename)}" />
 				<property name="testfilexml" value="${string::replace(testfile, '.htm', '.results.xml')}" />
-				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${current.dir.jasminetest}\${testfilexml}"  />
+				<echo message="File: ${testfile}, Xml: ${testfilexml}, Final: ${workspace.dir.jasminetest}\${testfilexml}"  />
 				<exec program="phantomjs" failonerror="false">
 					<arg value="${current.dir}/phantom/JasmineRunner.js" />
 					<arg value="--tests=${testfile}" />
