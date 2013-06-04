@@ -8,7 +8,7 @@ describe('App.Circle', function() {
 		this.circle = null;
 	});
 	
-	it('should instanciate correctly', function() {
+	it('can create a circle', function() {
 		expect(this.circle).toBeDefined();
 		expect(this.circle.radius).toEqual(5);
 	});

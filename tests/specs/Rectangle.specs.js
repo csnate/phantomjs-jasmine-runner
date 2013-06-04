@@ -8,7 +8,7 @@ describe('App.Rectangle', function() {
 		this.rectangle = null;
 	});
 	
-	it('should instanciate correctly', function() {
+	it('can create a rectangle', function() {
 		expect(this.rectangle).toBeDefined();
 		expect(this.rectangle.width).toEqual(10);
 		expect(this.rectangle.height).toEqual(20);
