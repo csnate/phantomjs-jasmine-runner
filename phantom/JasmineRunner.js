@@ -143,7 +143,7 @@
 	JasmineRunner.prototype.run = function () {
 
 		var url = this.options.baseurl + this.options.tests,
-			page = typeof require != 'undefined' ? require('webpage').create() : typeof WebPage != 'undefined' ? new WebPage() : null,
+			page = require('webpage').create(),
 			outputfilename = this.options.outputfilename,
 			tests = this.options.tests,
 			fs = this.fs,
@@ -270,7 +270,8 @@
 	};
 	
 	// Run it
-    var runner = new JasmineRunner(phantom.args);
+	var args = require('system').args;
+    var runner = new JasmineRunner(args);
     runner.run();
     
 })();
