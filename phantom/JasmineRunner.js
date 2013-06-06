@@ -221,7 +221,6 @@
 						result.failedTotal = failed;
 
 						results.push(result);
-						total += resultSpecs.length;
 						
 					}
 
