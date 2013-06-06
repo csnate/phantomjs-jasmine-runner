@@ -57,16 +57,20 @@
     };
 
     function generateTestResultXml(finalResult, tests) {
-        var timestamp = isoDateString(new Date());
-        var results = finalResult.results;
-   		var resultStr = '';
-        for (var i = 0, len = results.length; i < len; i++) {
-            var result = results[i];
-            var specs = result.specs;
+        var timestamp = isoDateString(new Date()),
+        	results = finalResult.results,
+   			resultStr = '',
+   			i = 0; l = results.length;
+   			
+        for (; i < l; i++) {
+            var result = results[i],
+            	specs = result.specs;
+            	j = 0, k = specs.length;
+            	
             resultStr += '<testsuite name="' + result.suiteName + '" timestamp="' + timestamp + '" tests="' + result.specs.length + '" failures="'
                     + result.failedTotal + '">';
                     
-            for (var j = 0, l = specs.length; j < l; j++) {
+            for (; j < k; j++) {
                 var sp = specs[j];
                 resultStr += '<testcase name="' + sp.specName + '" classname="' + result.suiteName + '">';
 
@@ -177,27 +181,29 @@
 				console.log("ready");
 				console.log("OutputFilename: " + outputfilename);
 				var finalResult = page.evaluate(function () {
-					var suites = document.body.querySelectorAll('.suite');
+					var suites = document.body.querySelectorAll('.suite'),
+						results = [],
+						i = 0, l = suites.length;
 					console.log("# of suites: " + suites.length);
-					var results = [];
-					var total = 0;
-					for(var i = 0; i < suites.length; i++) {
-						var result = { };
-						var suite = suites[i];
 
-						var suiteName = suite.querySelector('.description').innerText;
+					for(; i < l; i++) {
+						var result = { },
+							suite = suites[i],
+							suiteName = suite.querySelector('.description').innerText,
+							resultSpecs = [],
+							specs = suite.querySelectorAll('.spec'),
+							failed = 0,
+							j = 0; k = specs.length;
 					
 						result.suiteName = suiteName;
 
 						console.log('--------------------------------------------------------');
-						var resultSpecs = [];
-						var specs = suite.querySelectorAll('.spec');
-						var failed = 0;
-						for(var j = 0; j < specs.length; j++) {
-							var detail = { };
-							var spec = specs[j];
-							var passed = spec.className.indexOf('passed') != -1;
-							var skipped = spec.className.indexOf('skipped') != -1;
+						
+						for(; j < k; j++) {
+							var detail = { },
+								spec = specs[j],
+								passed = spec.className.indexOf('passed') != -1,
+								skipped = spec.className.indexOf('skipped') != -1;
 						
 							detail.specName = spec.querySelector('.description').innerText;
 
@@ -219,16 +225,13 @@
 						
 					}
 
-					var runner1 = document.body.querySelector('.runner');
-					//console.log('--------------------------------------------------------');
-					var summary = runner1.querySelector('.description').innerText;
+					var runner1 = document.body.querySelector('.runner'),
+						summary = runner1.querySelector('.description').innerText;
 					console.log('Finished: ' + summary);
 
 					return {
 						results: results,
 						summary: summary
-						// totalFailed: failed,
-						// specsTotal: total
 					};
 				});
 
@@ -272,8 +275,8 @@
 	};
 	
 	// Run it
-	var args = require('system').args;
-    var runner = new JasmineRunner(args);
+	var args = require('system').args,
+    	runner = new JasmineRunner(args);
     runner.run();
     
 })();
