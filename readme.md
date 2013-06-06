@@ -6,6 +6,7 @@ Prerequisites
 -----
 * You are using a [Jenkins] (http://jenkins-ci.org/) CI server
 * [PhantomJS] (http://phantomjs.org/) is installed on the build server and added to the PATH
+* The JasmineRunner is developed for use with the TrivialReporter and NOT the HtmlReporter.
 * For this example, I am using [NAnt] (http://nant.sourceforge.net/) for my build script, but that is not required.  You can just as easily use a batch command build step instead.
 
 Jenkins Configuration
