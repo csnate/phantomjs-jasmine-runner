@@ -1,27 +1,29 @@
 describe('App.Rectangle', function() {
 	
+	var rectangle;
+	
 	beforeEach(function() {
-		this.rectangle = new App.Rectangle(10, 20);
+		rectangle = new App.Rectangle(10, 20);
 	});
 	
 	afterEach(function() {
-		this.rectangle = null;
+		rectangle = null;
 	});
 	
 	it('can create a rectangle', function() {
-		expect(this.rectangle).toBeDefined();
-		expect(this.rectangle.width).toEqual(10);
-		expect(this.rectangle.height).toEqual(20);
+		expect(rectangle).toBeDefined();
+		expect(rectangle.width).toEqual(10);
+		expect(rectangle.height).toEqual(20);
 	});
 	
 	it('can calculate area', function() {
-		var area = this.rectangle.getArea();
+		var area = rectangle.getArea();
 		
 		expect(area).toEqual(200);
 	});
 	
 	it('can calculate perimeter', function() {
-		var perimeter = this.rectangle.getPerimeter();
+		var perimeter = rectangle.getPerimeter();
 		
 		expect(perimeter).toEqual(60);
 	});
