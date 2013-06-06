@@ -59,11 +59,11 @@
     function generateTestResultXml(finalResult, tests) {
         var timestamp = isoDateString(new Date());
         var results = finalResult.results;
-   
+   		var resultStr = '';
         for (var i = 0, len = results.length; i < len; i++) {
             var result = results[i];
             var specs = result.specs;
-            var resultStr = '<testsuite name="' + result.suiteName + '" timestamp="' + timestamp + '" tests="' + result.specs.length + '" failures="'
+            resultStr += '<testsuite name="' + result.suiteName + '" timestamp="' + timestamp + '" tests="' + result.specs.length + '" failures="'
                     + result.failedTotal + '">';
                     
             for (var j = 0, l = specs.length; j < l; j++) {
