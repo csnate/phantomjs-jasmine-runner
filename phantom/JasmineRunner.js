@@ -60,12 +60,12 @@
         var timestamp = isoDateString(new Date());
         var results = finalResult.results;
    
-        var resultStr = '<testsuite name="' + tests + '" timestamp="' + timestamp + '" tests="' + finalResult.suitsTotal + '" failures="'
-                    + finalResult.totalFailed + '">';
-
         for (var i = 0, len = results.length; i < len; i++) {
             var result = results[i];
             var specs = result.specs;
+            var resultStr = '<testsuite name="' + result.suiteName + '" timestamp="' + timestamp + '" tests="' + result.specs.length + '" failures="'
+                    + result.failedTotal + '">';
+                    
             for (var j = 0, l = specs.length; j < l; j++) {
                 var sp = specs[j];
                 resultStr += '<testcase name="' + sp.specName + '" classname="' + result.suiteName + '">';
@@ -78,8 +78,9 @@
 
                 resultStr += '</testcase>';
             }
+            resultStr += '</testsuite>';
         }
-	    resultStr += '</testsuite>';
+	    
         return resultStr;
     };
 
@@ -179,7 +180,6 @@
 					var suites = document.body.querySelectorAll('.suite');
 					console.log("# of suites: " + suites.length);
 					var results = [];
-					var failed = 0;
 					var total = 0;
 					for(var i = 0; i < suites.length; i++) {
 						var result = { };
@@ -192,6 +192,7 @@
 						console.log('--------------------------------------------------------');
 						var resultSpecs = [];
 						var specs = suite.querySelectorAll('.spec');
+						var failed = 0;
 						for(var j = 0; j < specs.length; j++) {
 							var detail = { };
 							var spec = specs[j];
@@ -211,6 +212,7 @@
 						}
 
 						result.specs = resultSpecs;
+						result.failedTotal = failed;
 
 						results.push(result);
 						total += resultSpecs.length;
@@ -224,9 +226,9 @@
 
 					return {
 						results: results,
-						summary: summary,
-						totalFailed: failed,
-						suitsTotal: total
+						summary: summary
+						// totalFailed: failed,
+						// specsTotal: total
 					};
 				});
 
