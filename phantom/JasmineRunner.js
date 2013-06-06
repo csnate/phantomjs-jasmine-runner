@@ -183,6 +183,7 @@
 				var finalResult = page.evaluate(function () {
 					var suites = document.body.querySelectorAll('.suite'),
 						results = [],
+						totalFailed = 0,
 						i = 0, l = suites.length;
 					console.log("# of suites: " + suites.length);
 
@@ -219,6 +220,7 @@
 
 						result.specs = resultSpecs;
 						result.failedTotal = failed;
+						totalFailed += failed;
 
 						results.push(result);
 						
@@ -230,7 +232,8 @@
 
 					return {
 						results: results,
-						summary: summary
+						summary: summary,
+						totalFailed: totalFailed
 					};
 				});
 
