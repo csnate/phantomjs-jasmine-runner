@@ -47,7 +47,7 @@
 			moduleName = 'Jasmine',
 			timestamp = isoDateString(new Date()),
 			resultStr = '<testsuite name="' + tests + '" timestamp="' + timestamp + '" tests="1" failures="1">' +
-                        '<testcase name="' + testName + '" classname="' + escape(moduleName) + '">' +
+                        '<testcase name="' + testName + '" classname="' + moduleName + '">' +
                         '<failure message="' + moduleName + '" type="' + moduleName + '">' +
 						err +
                         '</failure>' +
@@ -71,7 +71,7 @@
                 resultStr += '<testcase name="' + sp.specName + '" classname="' + result.suiteName + '">';
 
                 if (sp.failedMsg) {
-                    resultStr += '<failure message="' + escape(sp.failedMsg) + '" type="' + result.suiteName + '">';
+                    resultStr += '<failure message="' + sp.failedMsg + '" type="' + result.suiteName + '">';
                     resultStr += '<failedTrace>' + sp.failedTrace + '</failedTrace>';
                     resultStr += '</failure>';
                 }
